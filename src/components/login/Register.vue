@@ -1,168 +1,104 @@
 <template>
-  <div>
-	<div class="body"></div>
-		<div class="grad"></div>
-		<div class="header">
-			<div>User<span>Register</span></div>
-		</div>
-		<br>
-		<div class="login">
-				<input type="text" placeholder="Nome" name="nome">
-				<input type="text" placeholder="Sobrenome" name="sobrenome">
-        <input type="text" placeholder="Data de Nascimento " name="nascimento">
-        <input type="text" placeholder="E-mail " name="email">
-        <input type="text" placeholder="Username " name="username">
-        <input type="password" placeholder="Password " name="password">
-				<input type="button" value="Register Now">
-		</div>
-</div>
+  <div class="bg-gradient-warning">
+    <div class="container">
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+            <div class="col-lg-7">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                </div>
+                <form class="user">
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        id="exampleFirstName"
+                        placeholder="First Name"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        id="exampleLastName"
+                        placeholder="Last Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      class="form-control form-control-user"
+                      id="exampleInputEmail"
+                      placeholder="Email Address"
+                    />
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input
+                        type="password"
+                        class="form-control form-control-user"
+                        id="exampleInputPassword"
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <input
+                        type="password"
+                        class="form-control form-control-user"
+                        id="exampleRepeatPassword"
+                        placeholder="Repeat Password"
+                      />
+                    </div>
+                  </div>
+                   <router-link to="/login"><button
+                    class="btn btn-primary btn-user btn-block"
+                  >
+                    Register Account
+                  </button></router-link>
+                  <hr />
+                  <a
+                    href="index.html"
+                    class="btn btn-google btn-user btn-block"
+                  >
+                    <i class="fab fa-google fa-fw"></i> Register with Google
+                  </a>
+                  <a
+                    href="index.html"
+                    class="btn btn-facebook btn-user btn-block"
+                  >
+                    <i class="fab fa-facebook-f fa-fw"></i> Register with
+                    Facebook
+                  </a>
+                </form>
+                <hr />
+                <div class="text-center">
+                  <a class="small" href="forgot-password.html"
+                    >Forgot Password?</a
+                  >
+                </div>
+                <div class="text-center">
+                   <router-link to="/login">Already have an account? Login!</router-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+import "./login.css";
+export default {};
 </script>
 
 <style>
-@import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
-
-body{
-	margin: 0;
-	padding: 0;
-	background: #fff;
-
-	color: #fff;
-	font-family: Arial;
-	font-size: 12px;
-}
-
-.body{
-	position: absolute;
-	top: -20px;
-	left: -20px;
-	right: -40px;
-	bottom: -40px;
-	width: auto;
-	height: auto;
-	background-image: url( '~@/assets/login-wallpaper.jpg');
-	background-size: cover;
-	-webkit-filter: blur(5px);
-	z-index: 0;
-}
-
-.grad{
-	position: absolute;
-	top: -20px;
-	left: -20px;
-	right: -40px;
-	bottom: -40px;
-	width: auto;
-	height: auto;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
-	z-index: 1;
-	opacity: 0.7;
-}
-
-.header{
-	position: absolute;
-	top: calc(37% - 35px);
-	left: calc(62% - 255px);
-	z-index: 2;
-}
-
-.header div{
-	float: left;
-	color: #fff;
-	font-family: 'Exo', sans-serif;
-	font-size: 35px;
-	font-weight: 200;
-}
-
-.header div span{
-	color: #faf753 !important;
-}
-
-.login{
-	position: absolute;
-	top: calc(50% - 75px);
-	left: calc(50% - 50px);
-	height: 150px;
-	width: 350px;
-	padding: 10px;
-	z-index: 2;
-}
-
-.login input[type=text]{
-	width: 250px;
-	height: 30px;
-	background: transparent;
-	border: 1px solid rgba(255,255,255,0.6);
-	border-radius: 2px;
-	color: #fff;
-	font-family: 'Exo', sans-serif;
-	font-size: 16px;
-	font-weight: 400;
-  padding: 4px;
-  margin-bottom: 10px;
-}
-
-.login input[type=password]{
-	width: 250px;
-	height: 30px;
-	background: transparent;
-	border: 1px solid rgba(255,255,255,0.6);
-	border-radius: 2px;
-	color: #fff;
-	font-family: 'Exo', sans-serif;
-	font-size: 16px;
-	font-weight: 400;
-	padding: 4px;
-}
-
-.login input[type=button]{
-	width: 120px;
-	height: 40px;
-	background: #fff;
-	border: 1px solid #fff;
-	cursor: pointer;
-	border-radius: 2px;
-	color: #a18d6c;
-	font-family: 'Exo', sans-serif;
-	font-size: 16px;
-	font-weight: 400;
-	padding: 6px;
-	margin-top: 10px;
-}
-
-.login input[type=button]:hover{
-	opacity: 0.8;
-}
-
-.login input[type=button]:active{
-	opacity: 0.6;
-}
-
-.login input[type=text]:focus{
-	outline: none;
-	border: 1px solid rgba(255,255,255,0.9);
-}
-
-.login input[type=password]:focus{
-	outline: none;
-	border: 1px solid rgba(255,255,255,0.9);
-}
-
-.login input[type=button]:focus{
-	outline: none;
-}
-
-::-webkit-input-placeholder{
-   color: rgba(255,255,255,0.6);
-}
-
-::-moz-input-placeholder{
-   color: rgba(255,255,255,0.6);
-}
+@import url("https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i");
 </style>

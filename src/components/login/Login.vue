@@ -59,7 +59,7 @@
                     >
                   </div>
                   <div class="text-center">
-                    <a class="small" href="register.html">Create an Account!</a>
+                    <router-link to="/register">Create an Account!</router-link>
                   </div>
                 </div>
               </div>
