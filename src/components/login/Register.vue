@@ -11,14 +11,14 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                 </div>
-                <form class="user">
+                <form @submit.prevent="salvar" class="user">
                   <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input
-                        type="text"
+                      <input type="text"
                         class="form-control form-control-user"
                         id="exampleFirstName"
                         placeholder="First Name"
+                        v-model="usuario.nome"
                       />
                     </div>
                     <div class="col-sm-6">
@@ -27,6 +27,7 @@
                         class="form-control form-control-user"
                         id="exampleLastName"
                         placeholder="Last Name"
+                        v-model="usuario.sobrenome"
                       />
                     </div>
                   </div>
@@ -36,6 +37,7 @@
                       class="form-control form-control-user"
                       id="exampleInputEmail"
                       placeholder="Email Address"
+                      v-model="usuario.email"
                     />
                   </div>
                   <div class="form-group row">
@@ -45,6 +47,7 @@
                         class="form-control form-control-user"
                         id="exampleInputPassword"
                         placeholder="Password"
+                        v-model="usuario.senha"
                       />
                     </div>
                     <div class="col-sm-6">
@@ -56,11 +59,11 @@
                       />
                     </div>
                   </div>
-                   <router-link to="/login"><button
+                   <button
                     class="btn btn-primary btn-user btn-block"
                   >
                     Register Account
-                  </button></router-link>
+                  </button>
                   <hr />
                   <a
                     href="index.html"
@@ -96,7 +99,30 @@
 
 <script>
 import "./login.css";
-export default {};
+import Usuario from '../../services/usuarios';
+
+export default {
+
+  data(){
+    return{
+      usuario: {
+        nome: '',
+        sobrenome: '',
+        email: '',
+        senha: ''
+      }
+    }
+  },
+
+  methods:{
+    salvar() {
+      Usuario.criar(this.usuario).then(resposta => {
+        this.resposta = resposta;
+        alert('Usuario salvo com sucesso!');
+      })
+    }
+  }
+}
 </script>
 
 <style>
