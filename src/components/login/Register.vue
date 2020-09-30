@@ -100,7 +100,8 @@
 <script>
 import "./login.css";
 import Usuario from '../../services/usuarios';
-
+import * as firebase from "firebase/app";
+import "firebase/auth";
 export default {
 
   data(){
@@ -116,13 +117,19 @@ export default {
 
   methods:{
     salvar() {
-      Usuario.criar(this.usuario).then(resposta => {
-        this.resposta = resposta;
-        alert('Usuario salvo com sucesso!');
-      })
+        firebase.auth().createUserWithEmailAndPassword(this.usuario.email, this.usuario.senha)
+        .then( result => {
+          console.log(result);
+          Usuario.criar(this.usuario).then(resposta => {
+            this.resposta = resposta;
+            alert('Usuario salvo com sucesso!');
+          })
+        }, error =>{
+          console.log(error.message);
+        });
+      }
     }
   }
-}
 </script>
 
 <style>
