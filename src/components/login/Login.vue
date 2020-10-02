@@ -14,12 +14,13 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                   </div>
-                  <form class="user">
+                  <form @submit.prevent="logar" class="user">
                     <div class="form-group">
                       <input
                         type="email"
                         class="form-control form-control-user"
                         id="inputEmail"
+                        v-model="usuario.email"
                         aria-describedby="emailHelp"
                         placeholder="Enter Email Address..."
                       />
@@ -29,6 +30,7 @@
                         type="password"
                         class="form-control form-control-user"
                         id="inputPassword"
+                        v-model="usuario.senha"
                         placeholder="Password"
                       />
                     </div>
@@ -44,13 +46,13 @@
                         >
                       </div>
                     </div>
-                  </form>
                   <button
                     class="btn btn-primary btn-user btn-block"
                     id="btnLogin"
                   >
                     Login
                   </button>
+                  </form>
                   <hr />
 
                   <div class="text-center">
@@ -74,7 +76,36 @@
 
 <script>
 import "./login.css";
-export default {};
+import * as firebase from "firebase/app";
+import "firebase/auth";
+export default {
+  data(){
+    return{
+      usuario: {
+        email: '',
+        senha: ''
+      }
+    }
+  },
+  methods:{
+    logar() {
+      firebase.auth().signInWithEmailAndPassword(this.usuario.email, this.usuario.senha)
+      .then(result => {
+          console.log(result);
+          this.$router.push('/')
+          firebase.auth().onAuthStateChanged(user => {
+            if(user){
+              console.log(user.uid);
+            }else{
+              console.log("nao logado");
+            }
+          })
+      }, error =>{
+          console.log(error.message);
+        });
+    }
+  }
+};
 </script>
 
 <style>

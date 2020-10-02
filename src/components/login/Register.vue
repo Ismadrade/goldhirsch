@@ -123,6 +123,7 @@ export default {
           Usuario.criar(this.usuario).then(resposta => {
             this.resposta = resposta;
             alert('Usuario salvo com sucesso!');
+            this.$router.push('login')
           })
         }, error =>{
           console.log(error.message);

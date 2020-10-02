@@ -7,7 +7,6 @@ import Layout from './components/layout/Layout.vue'
 import "jquery/dist/jquery.min.js"
 import "bootstrap/dist/css/bootstrap.css"
 import "font-awesome/css/font-awesome.css"
-import "./main.css"
 import firebase from "firebase/app";
 Vue.use(VueRouter);
 
