@@ -76,6 +76,7 @@
 
 <script>
 import "./login.css";
+import Usuario from '../../services/usuarios';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 export default {
@@ -88,10 +89,17 @@ export default {
     }
   },
   methods:{
-    logar() {
+   logar() {
       firebase.auth().signInWithEmailAndPassword(this.usuario.email, this.usuario.senha)
       .then(result => {
-          this.$store.commit("setAuthentication", true)
+
+          Usuario.logar(this.usuario.email)
+          .then(resp => {
+            const usuario = JSON.stringify(resp.data)
+            localStorage.setItem('usuario', usuario)            
+          }, error =>{
+            console.log(error)
+          })
           const access_token = JSON.stringify(result);
           localStorage.setItem('firebase', access_token);
           this.$router.push("/");

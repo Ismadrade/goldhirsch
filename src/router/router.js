@@ -3,12 +3,13 @@ import Router from 'vue-router'
 import Login from '../components/login/Login.vue'
 import Register from '../components/login/Register.vue'
 import Layout from '../components/layout/Layout.vue'
-import store from '../store/store'
 import firebase from "firebase/app";
 import "firebase/auth";
+/* import store from '../store/store' */
 
 Vue.use(Router);
 
+const openRoutes=['login', 'register'];
 const router = new Router({
   routes: [
     { 
@@ -24,35 +25,21 @@ const router = new Router({
     { 
       path:'/', 
       name: 'index',
-      component: Layout, 
+      component: Layout,
+      beforeEnter:((to, from, next) =>{
+        firebase.auth().onAuthStateChanged(user => {
+          if(openRoutes.includes(to.name)){
+            next();
+          }
+          else if(user){
+            next();   
+          }else{
+            localStorage.removeItem('usuario');
+            next('/login');  
+          }
+        });   
+      }) 
     }
   ]
 })
-
-const openRoutes=['login', 'register'];
-let userLogado;
-router.beforeEach( async (to, from, next)  =>{
-  
-  firebase.auth().onAuthStateChanged(user => {
-    if(user){
-      console.log(user);
-      userLogado = true;      
-    }else{
-      console.log("nao logado");
-      userLogado = false;  
-    }
-  });
-
-  console.log(userLogado)
-
-  if(openRoutes.includes(to.name)){
-    next();
-  }else if(store.state.authenticated){
-    next();
-  }else{
-    next('/login');
-  }
-})
-
-
 export default router
