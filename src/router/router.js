@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '../components/login/Login.vue'
 import Register from '../components/login/Register.vue'
 import Layout from '../components/layout/Layout.vue'
+import store from '../store/store'
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -46,7 +47,7 @@ router.beforeEach( async (to, from, next)  =>{
 
   if(openRoutes.includes(to.name)){
     next();
-  }else if(userLogado){
+  }else if(store.state.authenticated){
     next();
   }else{
     next('/login');

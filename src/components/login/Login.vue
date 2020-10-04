@@ -91,6 +91,7 @@ export default {
     logar() {
       firebase.auth().signInWithEmailAndPassword(this.usuario.email, this.usuario.senha)
       .then(result => {
+          this.$store.commit("setAuthentication", true)
           const access_token = JSON.stringify(result);
           localStorage.setItem('firebase', access_token);
           this.$router.push("/");
