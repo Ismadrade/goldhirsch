@@ -1,14 +1,13 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import App from './App.vue'
-import Login from './components/login/Login.vue'
-import Register from './components/login/Register.vue'
-import Layout from './components/layout/Layout.vue'
+import router from "./router/router"
 import "jquery/dist/jquery.min.js"
 import "bootstrap/dist/css/bootstrap.css"
 import "font-awesome/css/font-awesome.css"
 import firebase from "firebase/app";
-Vue.use(VueRouter);
+
+
+
 
 const config = {
   apiKey: "AIzaSyDQlcX71M5VJ772OvkUf4e0J-UGDty80lo",
@@ -22,17 +21,6 @@ const config = {
 };
 
 firebase.initializeApp(config);
-
-const routes = [
-  { path:'/login', component: Login },
-  { path:'/register', component: Register },
-  { path:'/', component: Layout }
-];
-
-const router = new VueRouter({
-  routes
-});
-
 Vue.config.productionTip = false
 
 new Vue({

@@ -1,7 +1,7 @@
-import { http } from './config'
+import { api } from './config'
 
 export default {
   criar: (usuario) => {
-    return http.post('usuarios',usuario);
+    return api.post('usuarios',usuario);
   }
 }

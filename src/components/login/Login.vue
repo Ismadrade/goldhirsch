@@ -91,15 +91,9 @@ export default {
     logar() {
       firebase.auth().signInWithEmailAndPassword(this.usuario.email, this.usuario.senha)
       .then(result => {
-          console.log(result);
-          this.$router.push('/')
-          firebase.auth().onAuthStateChanged(user => {
-            if(user){
-              console.log(user.uid);
-            }else{
-              console.log("nao logado");
-            }
-          })
+          const access_token = JSON.stringify(result);
+          localStorage.setItem('firebase', access_token);
+          this.$router.push("/");
       }, error =>{
           console.log(error.message);
         });
