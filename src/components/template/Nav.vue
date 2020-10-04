@@ -8,7 +8,7 @@
             </button>  
             </div> 
             <div>
-                <span class="text-white mr-5" >Seja bem vindo {{ user }}</span>
+                <span class="text-white mr-5" v-if="loggedIn" >Seja bem vindo {{ loggedIn }}</span>
                 <a class="text-white mr-5" href="#" v-on:click="logout">Logout</a>            
             </div>        
         </nav>
@@ -20,11 +20,13 @@ import * as firebase from "firebase/app";
 import "firebase/auth"; 
 export default {
 
-    mounted(){    
-         let local = JSON.parse(localStorage.getItem('usuario'))  
-        console.log(local)  
-        this.user  = 'teste'                
-    },
+   computed:{
+       loggedIn(){
+           let user = JSON.parse(this.$store.getters.loggedIn);
+           console.log("user: ", user.nome)
+           return user.nome
+       }
+   },
     data(){          
         return{
             user: ''

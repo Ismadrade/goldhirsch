@@ -9,7 +9,7 @@ import "firebase/auth";
 
 Vue.use(Router);
 
-const openRoutes=['login', 'register'];
+ const openRoutes=['login', 'register']; 
 const router = new Router({
   routes: [
     { 
@@ -26,7 +26,7 @@ const router = new Router({
       path:'/', 
       name: 'index',
       component: Layout,
-      beforeEnter:((to, from, next) =>{
+       beforeEnter:((to, from, next) =>{
         firebase.auth().onAuthStateChanged(user => {
           if(openRoutes.includes(to.name)){
             next();

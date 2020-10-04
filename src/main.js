@@ -5,6 +5,10 @@ import "jquery/dist/jquery.min.js"
 import "bootstrap/dist/css/bootstrap.css"
 import "font-awesome/css/font-awesome.css"
 import firebase from "firebase/app";
+import store from './store/store'
+
+
+
 
 
 
@@ -26,5 +30,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
