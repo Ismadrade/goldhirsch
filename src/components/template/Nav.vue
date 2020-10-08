@@ -1,5 +1,5 @@
 <template>
- <div class="sb-nav-fixed">
+ <div>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between ">          
             <div>
            <router-link to="/"><a class="navbar-brand" href="#">Meus Clientes</a></router-link>
@@ -8,7 +8,6 @@
             </button>  
             </div> 
             <div>
-                <span class="text-white mr-5" v-if="loggedIn" >Seja bem vindo {{ loggedIn }}</span>
                 <a class="text-white mr-5" href="#" v-on:click="logout">Logout</a>            
             </div>        
         </nav>
@@ -19,19 +18,7 @@
 import * as firebase from "firebase/app";
 import "firebase/auth"; 
 export default {
-
-   computed:{
-       loggedIn(){
-           let user = JSON.parse(this.$store.getters.loggedIn);
-           console.log("user: ", user.nome)
-           return user.nome
-       }
-   },
-    data(){          
-        return{
-            user: ''
-        } 
-    },
+   
     methods: {
         logout(){
             firebase.auth().signOut()

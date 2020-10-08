@@ -1,15 +1,20 @@
 <template>
-  <div>
-  <Nav></Nav>
+  <div class="sb-nav-fixed">
+    <Nav></Nav>
+    <div id="layoutSidenav">
+      <Sidenav></Sidenav>
+    </div>
   </div>
 </template>
 
 <script>
 import jQuery from 'jquery';
 import Nav from '../template/Nav.vue';
+import Sidenav from '../template/Sidenav.vue';
 export default {
   components:{
-    Nav
+    Nav,
+    Sidenav
   },
 
   mounted: function () {
