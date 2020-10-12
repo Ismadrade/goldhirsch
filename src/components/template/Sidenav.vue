@@ -1,6 +1,6 @@
 <template>
     <div id="layoutSidenav_nav">
-      <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+      <nav class="sb-sidenav accordion sb-sidenav-primary" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
           <div class="nav">
             <div class="sb-sidenav-menu-heading">Core</div>
@@ -125,9 +125,9 @@
             >
           </div>
         </div>
-        <div class="sb-sidenav-footer">
+        <div class="sb-sidenav-footer text-white">
           <div class="small">Logged in as:</div>
-          <span class="text-white mr-5" v-if="loggedIn" >{{ loggedIn }}</span>
+          <span class="mr-5" v-if="loggedIn" >{{ loggedIn }}</span>
         </div>
       </nav>
     </div>

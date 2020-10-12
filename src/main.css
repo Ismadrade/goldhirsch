@@ -1,15 +1,5 @@
 @charset "UTF-8";
-/*!
-* Start Bootstrap - SB Admin v6.0.0 (https://startbootstrap.com/templates/sb-admin)
-* Copyright 2013-2020 Start Bootstrap
-* Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-sb-admin/blob/master/LICENSE)
-*/
-/*!
- * Bootstrap v4.4.1 (https://getbootstrap.com/)
- * Copyright 2011-2019 The Bootstrap Authors
- * Copyright 2011-2019 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -10212,3 +10202,37 @@ body {
 .sb-sidenav-light .sb-sidenav-footer {
   background-color: #e9ecef;
 }
+
+.sb-sidenav-primary {
+  background-color: #f1f4fc;
+  color: #212529;
+}
+.sb-sidenav-primary .sb-sidenav-menu .sb-sidenav-menu-heading {
+  color: #adb5bd;
+}
+.sb-sidenav-primary .sb-sidenav-menu .nav-link {
+  color: #212529;
+}
+.sb-sidenav-primary .sb-sidenav-menu .nav-link .sb-nav-link-icon {
+  color: #adb5bd;
+}
+.sb-sidenav-primary .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow {
+  color: #adb5bd;
+}
+.sb-sidenav-primary .sb-sidenav-menu .nav-link:hover {
+  color: #007bff;
+}
+.sb-sidenav-primary .sb-sidenav-menu .nav-link.active {
+  color: #007bff;
+}
+.sb-sidenav-primary .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
+  color: #007bff;
+}
+.sb-sidenav-primary .sb-sidenav-footer {
+  background-color: #4e73df;
+}
+
+.sb-new-blue {
+  background-color: #4e73df;
+}
+
