@@ -3,7 +3,14 @@
     <Nav></Nav>
     <div id="layoutSidenav">
       <Sidenav></Sidenav>
-    </div>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid">
+            <router-view></router-view>
+          </div>
+        </main>
+      </div>
+    </div>       
   </div>
 </template>
 
@@ -11,6 +18,7 @@
 import jQuery from 'jquery';
 import Nav from '../template/Nav.vue';
 import Sidenav from '../template/Sidenav.vue';
+
 export default {
   components:{
     Nav,
@@ -36,7 +44,7 @@ export default {
     });
 })(jQuery);
 
-  },
+  },  
 };
 </script>
 
