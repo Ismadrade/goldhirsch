@@ -94,6 +94,7 @@ export default {
        senha: this.usuario.senha
      })
      .then( () => {
+       this.$toastr.s("Usuario logado com sucesso!");
        this.$router.push('/')
      })
     }

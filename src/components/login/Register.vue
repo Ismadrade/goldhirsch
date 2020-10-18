@@ -122,11 +122,11 @@ export default {
           console.log(result);
           Usuario.criar(this.usuario).then(resposta => {
             this.resposta = resposta;
-            alert('Usuario salvo com sucesso!');
+            this.$toastr.s("Usuario cadastrado com sucesso!");
             this.$router.push('login')
           })
         }, error =>{
-          console.log(error.message);
+          this.$toastr.e(error.message, "Ocorreu um erro:");
         });
       }
     }

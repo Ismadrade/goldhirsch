@@ -21,10 +21,10 @@ export default {
         logout(){
             firebase.auth().signOut()
             .then( () => {
-                console.log("Deslogado com sucesso!");
+                this.$toastr.s("Usuario deslogado com sucesso!");
 
             }, error =>{
-                console.log(error.message);
+                this.$toastr.e(error.message, "Ocorreu um erro:");
             })
         }
     }

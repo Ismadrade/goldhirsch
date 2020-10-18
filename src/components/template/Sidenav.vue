@@ -36,6 +36,10 @@
               Cadastrar
               </a> 
           </div>
+        </div>
+        <div class="sb-sidenav-footer text-white">
+          <div class="small">Logged in as:</div>
+          <span class="mr-5" v-if="loggedIn" >{{ loggedIn }}</span>
         </div>                                          
       </nav>
     </div>

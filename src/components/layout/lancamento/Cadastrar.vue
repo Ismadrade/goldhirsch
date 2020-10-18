@@ -79,6 +79,12 @@ export default {
   methods: {
     cadastrar(){
       this.$store.dispatch("inserirLancamento", this.lancamento)
+        .then( () => {
+          this.$toastr.s("Lançamento cadastrado com sucesso!");
+        })
+        .catch(err => {
+          this.$toastr.e(err, "Ocorreu um erro:");
+        })
     }
   }  
 }
