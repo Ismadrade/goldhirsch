@@ -11,7 +11,7 @@
               Dashboard</a
             >
             <div class="sb-sidenav-menu-heading">Lançamento</div>
-            <a
+            <router-link to="/lancamentos/consulta"            
               class="nav-link collapsed"
               href="#"
               data-toggle="collapse"
@@ -21,9 +21,9 @@
               ><div class="sb-nav-link-icon">
                 <i class="fa fa-search"></i>
               </div>
-              Consultar
-              </a>            
-            <a
+              Consultar              
+              </router-link>            
+           <router-link to="/lancamentos/cadastrar"
               class="nav-link collapsed"
               href="#"
               data-toggle="collapse"
@@ -34,7 +34,7 @@
                 <i class="fa fa-money"></i>
               </div>
               Cadastrar
-              </a> 
+              </router-link>
           </div>
         </div>
         <div class="sb-sidenav-footer text-white">

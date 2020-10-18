@@ -44,7 +44,11 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Tipo:</label>
-              <input type="text" class="form-control" v-model="lancamento.tipo" />
+              <select v-model="lancamento.tipo" class="form-control">
+                <option disabled value="">Escolha um item</option>
+                <option value="RECEITA">Receita</option>
+                <option value="DESPESA">Despesa</option>
+              </select>              
             </div>
           </div>
         </div>
@@ -61,16 +65,16 @@
 </template>
 
 <script>
+const usuario = JSON.parse(localStorage.getItem("usuario")); 
 export default {
-  data(){
-    const usuario = JSON.parse(localStorage.getItem("usuario"));    
+  data(){       
     return{
       lancamento: {
         descricao: '',
-        mes: 0,
-        ano: 0,
+        mes: '',
+        ano: '',
         usuario: usuario.id,
-        valor: 0.0,
+        valor: '',
         tipo: ''
       }
       
@@ -81,10 +85,18 @@ export default {
       this.$store.dispatch("inserirLancamento", this.lancamento)
         .then( () => {
           this.$toastr.s("Lançamento cadastrado com sucesso!");
+          this.limparForm();          
         })
         .catch(err => {
           this.$toastr.e(err, "Ocorreu um erro:");
         })
+    },
+    limparForm() {
+      this.lancamento.descricao = ''
+      this.lancamento.mes = ''
+      this.lancamento.ano = ''
+      this.lancamento.valor = ''
+      this.lancamento.tipo = ''
     }
   }  
 }
