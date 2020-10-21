@@ -65,9 +65,9 @@
 </template>
 
 <script>
-const usuario = JSON.parse(localStorage.getItem("usuario")); 
 export default {
-  data(){       
+  data(){ 
+    const usuario = JSON.parse(localStorage.getItem("usuario"));       
     return{
       lancamento: {
         descricao: '',
