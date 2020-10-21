@@ -28,6 +28,23 @@ export default{
           reject(err)
         })
       })
+    },
+    buscarLancamentos(context, payload){
+      return new Promise((resolve, reject) => {
+        Lancamento.buscarLancamento(payload)
+          .then( resp => {
+            const lancamento = JSON.stringify(resp.data)
+            localStorage.setItem('lancamentos', lancamento)   
+            context.commit("lancamento", lancamento ) 
+            resolve(resp) 
+          }, error =>{
+            console.log(error.message);
+          })
+        .catch(err => {
+          console.log(err);
+          reject(err)
+        })
+      })
     }
   }
 }
