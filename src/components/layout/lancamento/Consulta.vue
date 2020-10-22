@@ -20,9 +20,8 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 //import ColumnGroup from 'primevue/columngroup';
-const usuario = JSON.parse(localStorage.getItem("usuario"));
-let data = [];  
 
+let data = [];
 export default {
   components:{
     DataTable,
@@ -35,6 +34,7 @@ export default {
     }
   },
    mounted() {
+     const usuario = JSON.parse(localStorage.getItem("usuario"));
      this.$store.dispatch("buscarLancamentos", usuario.id)
       .then( (resp) => {
         console.log(resp);
