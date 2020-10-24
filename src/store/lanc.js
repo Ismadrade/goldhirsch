@@ -1,13 +1,11 @@
 import Lancamento from '../services/lancamento'
-export default{
+
+export default {
   state: {
-    lancamentos: localStorage.getItem('lancamentos') || null
-  },
-  getters: {
-    
+    lancamentos: []
   },
   mutations: {
-    lancamento(state, lancamento) {
+    SET_LANCAMENTOS(state, lancamento) {
       state.lancamentos = lancamento
     }
   },
@@ -15,36 +13,19 @@ export default{
     inserirLancamento(context, payload){
       return new Promise((resolve, reject) => {
         Lancamento.criarLancamento(payload)
-          .then( resp => {
-            const lancamento = JSON.stringify(resp.data)
-            localStorage.setItem('lancamentos', lancamento)   
-            context.commit("lancamento", lancamento ) 
+          .then( resp => {                        
             resolve(resp) 
-          }, error =>{
-            console.log(error.message);
           })
-        .catch(err => {
+          .catch(err => {
           console.log(err);
           reject(err)
         })
       })
     },
-    buscarLancamentos(context, payload){
-      return new Promise((resolve, reject) => {
-        Lancamento.buscarLancamento(payload)
-          .then( resp => {
-            const lancamento = JSON.stringify(resp.data)
-            localStorage.setItem('lancamentos', lancamento)   
-            context.commit("lancamento", lancamento ) 
-            resolve(resp) 
-          }, error =>{
-            console.log(error.message);
-          })
-        .catch(err => {
-          console.log(err);
-          reject(err)
-        })
-      })
+    async buscarLancamentos({commit}, payload){
+        let response = await Lancamento.buscarLancamento(payload);
+        console.log(response.data);
+        commit('SET_LANCAMENTOS', response.data);
     }
   }
 }
