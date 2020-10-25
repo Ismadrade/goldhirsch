@@ -18,9 +18,7 @@
 <script>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-//import ColumnGroup from 'primevue/columngroup';
 
-//let data = [];
 export default {
   components:{
     DataTable,
@@ -34,13 +32,10 @@ export default {
     computed: {
       lancamentos() {
         let data = this.$store.state.lanc.lancamentos;
-        console.log('aqui tem data', data) 
         return data
         }
     }
 }
 </script>
-
 <style>
-
 </style>
