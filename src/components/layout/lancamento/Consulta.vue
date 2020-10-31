@@ -11,6 +11,16 @@
       <Column field="ano" header="Ano"></Column>
       <Column field="tipo" header="Tipo"></Column>
       <Column field="valor" header="Valor"></Column>
+      <Column :exportable="false" header="Editar">
+        <template #body="slotProps">
+            <Button class="btn btn-warning" @click="editarLancamento(slotProps.data)" ><i class="fa fa-pencil"></i></Button>
+        </template>
+      </Column>
+      <Column :exportable="false" header="Excluir">
+        <template #body="slotProps">
+            <Button class="btn btn-danger" @click="excluirLancamento(slotProps.data)" ><i class="fa fa-trash"></i></Button>
+        </template>
+      </Column>
     </DataTable>
   </div>
 </template>
@@ -34,6 +44,14 @@ export default {
         let data = this.$store.state.lanc.lancamentos;
         return data
         }
+    },
+    methods: {
+      editarLancamento(data){
+        console.log(data);
+      },
+      excluirLancamento(data){
+        this.$store.dispatch("excluirLancamento", data);
+      }
     }
 }
 </script>

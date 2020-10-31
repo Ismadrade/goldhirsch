@@ -7,7 +7,12 @@ export default {
   mutations: {
     SET_LANCAMENTOS(state, lancamento) {
       state.lancamentos = lancamento
+    },
+    DELETE_LANCAMENTO(state, lancamento){
+      var index = state.lancamentos.findIndex(lanc => lanc.id == lancamento.id);
+      state.lancamentos.splice(index, 1);
     }
+
   },
   actions: {
     inserirLancamento(context, payload){
@@ -26,6 +31,12 @@ export default {
         let response = await Lancamento.buscarLancamento(payload);
         console.log(response.data);
         commit('SET_LANCAMENTOS', response.data);
+    },  
+    excluirLancamento( {commit}, lancamento){
+      
+        Lancamento.excluirLancamento(lancamento.id)
+        commit('DELETE_LANCAMENTO', lancamento);
+
     }
-  }
+  },  
 }

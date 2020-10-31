@@ -6,5 +6,8 @@ export default {
   },
   buscarLancamento: (id) => {
     return api.get(`lancamentos?usuario=${id}`);
+  },
+  excluirLancamento: (id) => {
+    return api.delete(`lancamentos/${id}`);
   }
 }
