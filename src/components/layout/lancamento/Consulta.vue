@@ -18,26 +18,47 @@
       </Column>
       <Column :exportable="false" header="Excluir">
         <template #body="slotProps">
-            <Button class="btn btn-danger" @click="excluirLancamento(slotProps.data)" ><i class="fa fa-trash"></i></Button>
+            <Button class="btn btn-danger" @click="confirmexcluir(slotProps.data)" ><i class="fa fa-trash"></i></Button>
         </template>
       </Column>
     </DataTable>
+
+    <Dialog  header="Confirm" :modal="true" :visible.sync="deletarLancamento" :closable="true" >
+      <div class="confirmation-content">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem;"> </i>
+        <span>Are you sure you want to delete </span> 
+      </div>
+    <template #footer>
+        <Button label="No" icon="pi pi-times" class="p-button-text"  @click="deletarLancamento = false" />
+        <Button label="Yes" icon="pi pi-check" class="p-button-text"  @click="excluirLancamento()" />
+    </template>
+    </Dialog>
+
   </div>
 </template>
 
 <script>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
 
 export default {
   components:{
     DataTable,
-    Column
+    Column,
+    Dialog,
+    Button
   },
    mounted() {
      const usuario = JSON.parse(localStorage.getItem("usuario"));
-     this.$store.dispatch("buscarLancamentos", usuario.id)
-                  
+     this.$store.dispatch("buscarLancamentos", usuario.id)     
+    },
+    data() {
+        return {
+          deletarLancamento: false,
+          lancamento: null
+      }
     },
     computed: {
       lancamentos() {
@@ -49,8 +70,14 @@ export default {
       editarLancamento(data){
         console.log(data);
       },
-      excluirLancamento(data){
-        this.$store.dispatch("excluirLancamento", data);
+      confirmexcluir(data) {
+          this.lancamento = data;
+          return this.deletarLancamento = true;
+        },
+      excluirLancamento(){
+        this.$store.dispatch("excluirLancamento", this.lancamento);
+        this.deletarLancamento = false;
+        this.$toastr.s("Lançamento deletado com sucesso!");
       }
     }
 }

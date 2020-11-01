@@ -4,6 +4,9 @@ import router from "./router/router"
 import "jquery/dist/jquery.min.js"
 import "bootstrap/dist/css/bootstrap.css"
 import "font-awesome/css/font-awesome.css"
+import "primeicons/primeicons.css"
+import "primevue/resources/primevue.min.css"
+import "primevue/resources/themes/saga-blue/theme.css"
 import firebase from "firebase/app";
 import store from './store/store'
 import VueToastr from "vue-toastr";
@@ -21,6 +24,7 @@ const config = {
 
 firebase.initializeApp(config);
 Vue.config.productionTip = false
+Vue.prototype.$primevue = {ripple: true};
 
 Vue.use(VueToastr, {
   defaultPosition: "toast-top-right",
