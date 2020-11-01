@@ -10,23 +10,27 @@
       <Column field="mes" header="Mês"></Column>
       <Column field="ano" header="Ano"></Column>
       <Column field="tipo" header="Tipo"></Column>
-      <Column field="valor" header="Valor"></Column>
+      <Column field="valor" header="Valor">
+        <template #body="slotProps">
+            {{formatCurrency(slotProps.data.valor)}}
+        </template>
+      </Column>
       <Column :exportable="false" header="Editar">
         <template #body="slotProps">
-            <Button class="btn btn-warning" @click="editarLancamento(slotProps.data)" ><i class="fa fa-pencil"></i></Button>
+            <Button icon="pi pi-pencil" class="p-button-warning" @click="editarLancamento(slotProps.data)" />
         </template>
       </Column>
       <Column :exportable="false" header="Excluir">
         <template #body="slotProps">
-            <Button class="btn btn-danger" @click="confirmexcluir(slotProps.data)" ><i class="fa fa-trash"></i></Button>
+            <Button icon="pi pi-trash" class="p-button-danger" @click="confirmexcluir(slotProps.data)" />
         </template>
       </Column>
     </DataTable>
 
-    <Dialog  header="Confirm" :modal="true" :visible.sync="deletarLancamento" :closable="true" >
+    <Dialog  header="Confirm" :modal="true" :visible.sync="deletarLancamento" :closable="true" :style="{width: '450px'}" >
       <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem;"> </i>
-        <span>Are you sure you want to delete </span> 
+        <i class="pi pi-exclamation-triangle mr-2" style="font-size: 2rem" />
+        <span>Você realmente quer excluir este lançamento? </span> 
       </div>
     <template #footer>
         <Button label="No" icon="pi pi-times" class="p-button-text"  @click="deletarLancamento = false" />
@@ -78,9 +82,17 @@ export default {
         this.$store.dispatch("excluirLancamento", this.lancamento);
         this.deletarLancamento = false;
         this.$toastr.s("Lançamento deletado com sucesso!");
-      }
+      },
+       formatCurrency(value) {
+            return value.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+        },
     }
 }
 </script>
 <style>
+.confirmation-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 </style>

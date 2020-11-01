@@ -4,60 +4,52 @@
     <ol class="breadcrumb mb-4">
       <li class="breadcrumb-item active">Cadastro</li>
     </ol>
-    <div class="container-fluid">
+    <div class="p-fluid">
       <form @submit.prevent="cadastrar">
         <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>ID:</label>
-              <input type="text" class="form-control" disabled="true" />
+          <div class="col-sm-6">
+            <div class="p-field">
+              <label for="id">ID:</label>
+              <InputText id="id" type="text"  placeholder="ID" disabled="true" />
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Descrição:</label>
-              <input type="text" class="form-control" v-model="lancamento.descricao" />
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Mês:</label>
-              <select class="form-control" v-model="lancamento.mes" >
-                <option v-for="meses in calendario" v-bind:value="meses.value"  v-bind:key="meses.value">
-                  {{ meses.mes}}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Ano:</label>
-              <input type="text" class="form-control" v-model="lancamento.ano" minlength="4" maxlength="4" />
+          <div class="col-sm-6">
+            <div class="p-field">
+              <label for="descricao">Descrição:</label>
+              <InputText id="descricao" type="text" placeholder="Descrição"  v-model="lancamento.descricao" />
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Valor:</label>
-              <input class="form-control" v-model.lazy="lancamento.valor" v-money="lancamento.money" />
+          <div class="col-sm-6">
+            <div class="p-field">
+              <label for="mes">Mês:</label>
+              <Dropdown id="mes"  v-model="lancamento.mes" :options="calendario" optionLabel="mes" optionValue="code" placeholder="Selecione um mês" />                
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Tipo:</label>
-              <select v-model="lancamento.tipo" class="form-control">
-                <option disabled value="">Escolha um item</option>
-                <option value="RECEITA">Receita</option>
-                <option value="DESPESA">Despesa</option>
-              </select>              
+          <div class="col-sm-6">
+            <div class="p-field">
+              <label for="ano">Ano:</label>
+              <InputText id="ano" type="text" v-model="lancamento.ano" minlength="4" maxlength="4" placeholder="Ano" />
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-2">
+          <div class="col-sm-6">
+            <div class="p-field">
+              <label for="valor">Valor:</label>
+              <InputNumber id="valor" mode="currency" currency="BRL" locale="pt-BR" placeholder="Valor"  v-model="lancamento.valor" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="tipo">Tipo:</label>
+              <Dropdown id="tipo" v-model="lancamento.tipo" :options = "tipo" optionLabel="descricao" optionValue="code" placeholder="Selecione o tipo" />                
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">
             <button type="submit" class="btn btn-success">
               <i class="fa fa-save"></i> Salvar
             </button>
@@ -69,8 +61,16 @@
 </template>
 
 <script>
-import {VMoney} from 'v-money'
+import InputNumber from 'primevue/inputnumber';
+import InputText from 'primevue/inputtext';
+import Dropdown from 'primevue/dropdown';
 export default {
+  components:{
+    InputNumber,
+    InputText,
+    Dropdown
+
+  },
   data(){ 
     const usuario = JSON.parse(localStorage.getItem("usuario"));       
     return{
@@ -79,22 +79,14 @@ export default {
         mes: '',
         ano: '',        
         usuario: usuario.id,
-        valor: '0.00',
-        money: {
-          decimal: ',',
-          thousands: '.',          
-          precision: 2,
-          masked: false
-      },
+        valor: 0,
         tipo: ''
       }
       
     }      
   },
   methods: {
-    cadastrar(){ 
-      let dotValor = this.lancamento.valor.replace(',', '.');
-      this.lancamento.valor = dotValor;     
+    cadastrar(){  
       this.$store.dispatch("inserirLancamento", this.lancamento)
         .then( () => {
           this.$toastr.s("Lançamento cadastrado com sucesso!");
@@ -108,33 +100,37 @@ export default {
       this.lancamento.descricao = ''
       this.lancamento.mes = ''
       this.lancamento.ano = ''
-      this.lancamento.valor = '0'
+      this.lancamento.valor = 0
       this.lancamento.tipo = ''
     }
   },
   computed: {
     calendario(){
       return [
-        {'mes': 'Janeiro', 'value': 1},
-        {'mes': 'Fevereiro', 'value': 2},
-        {'mes': 'Março', 'value': 3},
-        {'mes': 'Abril', 'value': 4},
-        {'mes': 'Maio', 'value': 5},
-        {'mes': 'Junho', 'value': 6},
-        {'mes': 'Julho', 'value': 7},
-        {'mes': 'Agosto', 'value': 8},
-        {'mes': 'Setembro', 'value': 9},
-        {'mes': 'Outubro', 'value': 10},
-        {'mes': 'Novembro', 'value': 11},
-        {'mes': 'Dezembro', 'value': 12},
+        {'mes': 'Janeiro', code: 1},
+        {'mes': 'Fevereiro', code: 2},
+        {'mes': 'Março', code: 3},
+        {'mes': 'Abril', code: 4},
+        {'mes': 'Maio', code: 5},
+        {'mes': 'Junho', code: 6},
+        {'mes': 'Julho', code: 7},
+        {'mes': 'Agosto', code: 8},
+        {'mes': 'Setembro', code: 9},
+        {'mes': 'Outubro', code: 10},
+        {'mes': 'Novembro', code: 11},
+        {'mes': 'Dezembro', code: 12},
+      ]
+    },
+    tipo(){
+      return[
+        {'descricao': 'Receita', code: 'RECEITA'},
+        {'descricao': 'Despesa', code: 'DESPESA'},
       ]
     }
-  },
-  directives: {money: VMoney}  
+  }
 }
 
 </script>
 
 <style>
-
 </style>
