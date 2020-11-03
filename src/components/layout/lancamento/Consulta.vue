@@ -17,7 +17,7 @@
       </Column>
       <Column :exportable="false" header="Editar">
         <template #body="slotProps">
-            <Button icon="pi pi-pencil" class="p-button-warning" @click="editarLancamento(slotProps.data)" />
+            <Button icon="pi pi-pencil" class="p-button-warning" @click="modalEditLancamento(slotProps.data)" />
         </template>
       </Column>
       <Column :exportable="false" header="Excluir">
@@ -38,6 +38,59 @@
     </template>
     </Dialog>
 
+    <!-- Modal Editar -->
+    <Dialog  header="Editar Lançamento" :modal="true" :visible.sync="editarLancamento" :closable="true" :style="{width: '750px'}" class="p-fluid" >
+      <form @submit.prevent="">
+        <div class="row">
+          <div class="col-sm-6">  
+            <div class="p-field">
+              <label for="id">ID</label>
+              <InputNumber id="id" v-model.trim="lancamento.id" disabled="true" />        
+            </div>
+          </div>
+            <div class="col-sm-6">   
+              <div class="p-field">
+                <label for="descricao">Descrição</label>
+                <InputText id="descricao" v-model.trim="lancamento.descricao" required="true" autofocus />        
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">     
+            <div class="p-field">
+              <label for="mes">Mês:</label>
+                <Dropdown id="mes"  v-model="lancamento.mes" :options="calendario" optionLabel="mes" optionValue="code" placeholder="Selecione um mês" />                
+            </div>
+          </div>
+            <div class="col-sm-6">   
+              <div class="p-field">
+                <label for="ano">Ano:</label>
+                <InputText id="ano" type="text" v-model="lancamento.ano" minlength="4" maxlength="4" placeholder="Ano" />
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">    
+            <div class="p-field">
+              <label for="valor">Valor:</label>
+              <InputNumber id="valor" mode="currency" currency="BRL" locale="pt-BR" placeholder="Valor"  v-model="lancamento.valor" />
+            </div>
+          </div>
+          <div class="col-sm-6">   
+            <div class="form-group">
+              <label for="tipo">Tipo:</label>
+              <Dropdown id="tipo" v-model="lancamento.tipo" :options = "tipo" optionLabel="descricao" optionValue="code" placeholder="Selecione o tipo" />                
+            </div>
+          </div>
+        </div>    
+      </form>  
+    <template #footer>
+        <Button label="No" icon="pi pi-times" class="p-button-text"  @click="editarLancamento = false" />
+        <Button label="Yes" icon="pi pi-check" class="p-button-text"  @click="excluirLancamento()" />
+    </template>
+    </Dialog>
+
+
   </div>
 </template>
 
@@ -46,13 +99,19 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import InputNumber from 'primevue/inputnumber';
+import InputText from 'primevue/inputtext';
+import Dropdown from 'primevue/dropdown';
 
 export default {
   components:{
     DataTable,
     Column,
     Dialog,
-    Button
+    Button,
+    InputText,
+    InputNumber,
+    Dropdown
   },
    mounted() {
      const usuario = JSON.parse(localStorage.getItem("usuario"));
@@ -61,19 +120,46 @@ export default {
     data() {
         return {
           deletarLancamento: false,
-          lancamento: null
+          editarLancamento: false,
+          lancamento: {
+            descricao: '',
+            mes: '',
+            ano: '',        
+            usuario: 0,
+            valor: 0,
+            tipo: ''
+          }
       }
     },
     computed: {
       lancamentos() {
         let data = this.$store.state.lanc.lancamentos;
         return data
-        }
+        },
+      calendario(){
+        return [
+          {'mes': 'Janeiro', code: 1},
+          {'mes': 'Fevereiro', code: 2},
+          {'mes': 'Março', code: 3},
+          {'mes': 'Abril', code: 4},
+          {'mes': 'Maio', code: 5},
+          {'mes': 'Junho', code: 6},
+          {'mes': 'Julho', code: 7},
+          {'mes': 'Agosto', code: 8},
+          {'mes': 'Setembro', code: 9},
+          {'mes': 'Outubro', code: 10},
+          {'mes': 'Novembro', code: 11},
+          {'mes': 'Dezembro', code: 12},
+        ]
+      },
+    tipo(){
+      return[
+        {'descricao': 'Receita', code: 'RECEITA'},
+        {'descricao': 'Despesa', code: 'DESPESA'},
+      ]
+    }
     },
     methods: {
-      editarLancamento(data){
-        console.log(data);
-      },
       confirmexcluir(data) {
           this.lancamento = data;
           return this.deletarLancamento = true;
@@ -83,9 +169,14 @@ export default {
         this.deletarLancamento = false;
         this.$toastr.s("Lançamento deletado com sucesso!");
       },
-       formatCurrency(value) {
-            return value.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-        },
+      formatCurrency(value) {
+          return value.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+      },
+      modalEditLancamento(data){
+        this.lancamento = data;
+        return this.editarLancamento = true;
+      }
+
     }
 }
 </script>
