@@ -40,7 +40,7 @@
 
     <!-- Modal Editar -->
     <Dialog  header="Editar Lançamento" :modal="true" :visible.sync="editarLancamento" :closable="true" :style="{width: '750px'}" class="p-fluid" >
-      <form @submit.prevent="">
+      <form>
         <div class="row">
           <div class="col-sm-6">  
             <div class="p-field">
@@ -85,8 +85,8 @@
         </div>    
       </form>  
     <template #footer>
-        <Button label="No" icon="pi pi-times" class="p-button-text"  @click="editarLancamento = false" />
-        <Button label="Yes" icon="pi pi-check" class="p-button-text"  @click="excluirLancamento()" />
+        <Button label="Cancelar" icon="pi pi-times" class="p-button-danger"  @click="editarLancamento = false" />
+        <Button label="Salvar" icon="pi pi-check" class="p-button-success"  @click="editLancamento()" />
     </template>
     </Dialog>
 
@@ -175,6 +175,12 @@ export default {
       modalEditLancamento(data){
         this.lancamento = data;
         return this.editarLancamento = true;
+      },
+      editLancamento(){
+        console.log(this.lancamento)
+        this.$store.dispatch("editarLancamento", this.lancamento );
+        this.editarLancamento = false;
+        this.$toastr.s("Lançamento editado com sucesso!");
       }
 
     }

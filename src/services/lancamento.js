@@ -9,5 +9,8 @@ export default {
   },
   excluirLancamento: (id) => {
     return api.delete(`lancamentos/${id}`);
+  },
+  editarLancamento: (id, lancamento) => {
+    return api.put(`lancamentos/${id}`, lancamento);
   }
 }

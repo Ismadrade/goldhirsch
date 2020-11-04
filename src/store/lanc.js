@@ -11,6 +11,14 @@ export default {
     DELETE_LANCAMENTO(state, lancamento){
       var index = state.lancamentos.findIndex(lanc => lanc.id == lancamento.id);
       state.lancamentos.splice(index, 1);
+    },
+    EDIT_LANCAMENTO(state, payload){
+      state.lancamentos = state.lancamentos.map(lancamento =>{
+        if(lancamento.id === payload.id){
+          return Object.assign({}, lancamento, payload.data)
+        }
+        return lancamento;
+      })
     }
 
   },
@@ -37,6 +45,10 @@ export default {
         Lancamento.excluirLancamento(lancamento.id)
         commit('DELETE_LANCAMENTO', lancamento);
 
+    },
+    async editarLancamento({commit}, lancamento){
+      let response = await Lancamento.editarLancamento(lancamento.id, lancamento);
+      commit('EDIT_LANCAMENTO', response.data);
     }
   },  
 }
