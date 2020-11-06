@@ -13,12 +13,11 @@ export default {
       state.lancamentos.splice(index, 1);
     },
     EDIT_LANCAMENTO(state, payload){
-      state.lancamentos = state.lancamentos.map(lancamento =>{
-        if(lancamento.id === payload.id){
-          return Object.assign({}, lancamento, payload.data)
-        }
-        return lancamento;
-      })
+      var index = state.lancamentos.findIndex(l => l.id === payload.id);
+      if(index !== -1) {
+        state.lancamentos.splice(index, 1, payload);
+    }    
+
     }
 
   },

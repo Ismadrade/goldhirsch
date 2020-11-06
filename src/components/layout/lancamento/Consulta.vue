@@ -39,7 +39,7 @@
     </Dialog>
 
     <!-- Modal Editar -->
-    <Dialog  header="Editar Lançamento" :modal="true" :visible.sync="editarLancamento" :closable="true" :style="{width: '750px'}" class="p-fluid" >
+    <Dialog  header="Editar Lançamento" :modal="true" :visible.sync="editarLancamento" :closable="true" :contentStyle="{width: '100%', height: '100%'}" :style="{width: '70%', height: '80%'}" class="p-fluid" >
       <form>
         <div class="row">
           <div class="col-sm-6">  
@@ -51,7 +51,7 @@
             <div class="col-sm-6">   
               <div class="p-field">
                 <label for="descricao">Descrição</label>
-                <InputText id="descricao" v-model.trim="lancamento.descricao" required="true" autofocus />        
+                <InputText id="descricao" v-model.trim="lancamento.descricao" required="true" maxlength ="20" autofocus />        
               </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
         </div>    
       </form>  
     <template #footer>
-        <Button label="Cancelar" icon="pi pi-times" class="p-button-danger"  @click="editarLancamento = false" />
+        <Button label="Cancelar" icon="pi pi-times" class="p-button-danger"  @click="reset()" />
         <Button label="Salvar" icon="pi pi-check" class="p-button-success"  @click="editLancamento()" />
     </template>
     </Dialog>
@@ -103,6 +103,8 @@ import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 
+
+
 export default {
   components:{
     DataTable,
@@ -115,10 +117,10 @@ export default {
   },
    mounted() {
      const usuario = JSON.parse(localStorage.getItem("usuario"));
-     this.$store.dispatch("buscarLancamentos", usuario.id)     
+     this.$store.dispatch("buscarLancamentos", usuario.id);      
     },
     data() {
-        return {
+        return  {
           deletarLancamento: false,
           editarLancamento: false,
           lancamento: {
@@ -181,7 +183,14 @@ export default {
         this.$store.dispatch("editarLancamento", this.lancamento );
         this.editarLancamento = false;
         this.$toastr.s("Lançamento editado com sucesso!");
-      }
+      },
+
+      reset() {
+          this.editarLancamento = false;
+          const usuario = JSON.parse(localStorage.getItem("usuario"));
+          this.$store.dispatch("buscarLancamentos", usuario.id);
+        }
+      
 
     }
 }
