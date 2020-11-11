@@ -1,20 +1,31 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import Usuario from '../services/usuarios'
+import { api } from '../services/config'
 
 
 export default {
   state: {
-    usuario: localStorage.getItem('usuario') || null
+    usuario: localStorage.getItem('usuario') || null,
+    token: localStorage.getItem('token') || null,
   },
   getters: {
     loggedIn(state){
       return state.usuario;
+    },
+    getToken(state) {
+      return state.token;
     }
   },
   mutations: {
     usuario(state, usuario) {
-      state.usuario = usuario
+      state.usuario = usuario      
+    },
+    token(state, token){
+      state.token = token
+      if(token){
+        api.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(token)}` 
+      }
     }
   },
   actions: {
@@ -22,11 +33,14 @@ export default {
       return new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.senha)
         .then(() => {
-          Usuario.logar(credentials.email)
+          Usuario.logar(credentials)
             .then(resp => {
-              const usuario = JSON.stringify(resp.data)
-              localStorage.setItem('usuario', usuario)   
-              context.commit("usuario", usuario ) 
+              const usuario = JSON.stringify(resp.data.usuario)
+              const token = JSON.stringify(resp.data.token)
+              localStorage.setItem('usuario', usuario)
+              localStorage.setItem('token', token)                 
+              context.commit("usuario", usuario )
+              context.commit("token", token) 
               resolve(resp)     
             }, error =>{
               console.log(error)

@@ -116,8 +116,9 @@ export default {
     Dropdown
   },
    mounted() {
-     const usuario = JSON.parse(localStorage.getItem("usuario"));
-     this.$store.dispatch("buscarLancamentos", usuario.id);      
+     const usuario = JSON.parse(localStorage.getItem("token"));
+     console.log(usuario);
+     this.$store.dispatch("buscarLancamentos", 52);      
     },
     data() {
         return  {

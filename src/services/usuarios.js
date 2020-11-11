@@ -4,7 +4,7 @@ export default {
   criar: (usuario) => {
     return api.post('usuarios',usuario);
   },
-  logar: (email) =>{
-    return api.post('usuarios/logar?email=' + email )
+  logar: (loginFormRequest) =>{
+    return api.post('usuarios/logar', loginFormRequest )
   }
 }
