@@ -4,6 +4,8 @@
     <ol class="breadcrumb mb-4">
       <li class="breadcrumb-item active">Consulta</li>
     </ol>
+    <br/>
+    <Button label="Salvar" icon="pi pi-save" class="p-button-success" @click="salvar()" />
     <DataTable :value="lancamentos">
       <Column field="descricao" header="Descrição"></Column>
       <Column field="dataCadastro" header="Data do Cadastro"></Column>
@@ -39,7 +41,10 @@
     </Dialog>
 
     <!-- Modal Editar -->
-    <Dialog  header="Editar Lançamento" :modal="true" :visible.sync="editarLancamento" :closable="true" :contentStyle="{width: '100%', height: '100%'}" :style="{width: '70%', height: '80%'}" class="p-fluid" >
+    <Dialog  :modal="true" :visible.sync="editarLancamento" :closable="true" :contentStyle="{width: '100%', height: '100%'}" :style="{width: '70%', height: '80%'}" class="p-fluid" >
+    <template #header>
+      <h3>{{titulo}}</h3>
+    </template>
       <form>
         <div class="row">
           <div class="col-sm-6">  
@@ -116,19 +121,21 @@ export default {
     Dropdown
   },
    mounted() {
-     const usuario = JSON.parse(localStorage.getItem("token"));
+     const usuario = JSON.parse(localStorage.getItem("usuario"));
      console.log(usuario);
      this.$store.dispatch("buscarLancamentos", 52);      
     },
     data() {
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
         return  {
           deletarLancamento: false,
           editarLancamento: false,
+          titulo: "",
           lancamento: {
             descricao: '',
             mes: '',
             ano: '',        
-            usuario: 0,
+            usuario: usuario.id,
             valor: 0,
             tipo: ''
           }
@@ -138,7 +145,7 @@ export default {
       lancamentos() {
         let data = this.$store.state.lanc.lancamentos;
         return data
-        },
+      },
       calendario(){
         return [
           {'mes': 'Janeiro', code: 1},
@@ -155,14 +162,18 @@ export default {
           {'mes': 'Dezembro', code: 12},
         ]
       },
-    tipo(){
-      return[
-        {'descricao': 'Receita', code: 'RECEITA'},
-        {'descricao': 'Despesa', code: 'DESPESA'},
-      ]
-    }
+      tipo(){
+        return[
+          {'descricao': 'Receita', code: 'RECEITA'},
+          {'descricao': 'Despesa', code: 'DESPESA'},
+        ]
+      }
     },
     methods: {
+      salvar(){
+          this.titulo = "Salvar Lançamento"
+          return this.editarLancamento = true;        
+      },
       confirmexcluir(data) {
           this.lancamento = data;
           return this.deletarLancamento = true;
@@ -170,24 +181,43 @@ export default {
       excluirLancamento(){
         this.$store.dispatch("excluirLancamento", this.lancamento);
         this.deletarLancamento = false;
+        this.lancamento = {}
         this.$toastr.s("Lançamento deletado com sucesso!");
       },
       formatCurrency(value) {
           return value.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
       },
       modalEditLancamento(data){
+        console.log(data)
         this.lancamento = data;
+        this.titulo = "Editar Lançamento"
         return this.editarLancamento = true;
       },
       editLancamento(){
         console.log(this.lancamento)
-        this.$store.dispatch("editarLancamento", this.lancamento );
-        this.editarLancamento = false;
-        this.$toastr.s("Lançamento editado com sucesso!");
+        if(this.lancamento.id){
+          this.$store.dispatch("editarLancamento", this.lancamento );
+          this.editarLancamento = false;
+          this.lancamento = {}
+          this.$toastr.s("Lançamento editado com sucesso!");
+        }else{
+          this.$store.dispatch("inserirLancamento", this.lancamento)
+            .then( () => {
+              this.$toastr.s("Lançamento cadastrado com sucesso!");
+              this.lancamento = {} 
+              this.editarLancamento = false;
+              const usuario = JSON.parse(localStorage.getItem("usuario"));
+              this.$store.dispatch("buscarLancamentos", usuario.id);       
+            })
+            .catch(err => {
+              this.$toastr.e(err, "Ocorreu um erro:");
+        })
+        }      
       },
 
       reset() {
           this.editarLancamento = false;
+          this.lancamento = {}
           const usuario = JSON.parse(localStorage.getItem("usuario"));
           this.$store.dispatch("buscarLancamentos", usuario.id);
         }

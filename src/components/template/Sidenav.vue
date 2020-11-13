@@ -19,21 +19,9 @@
               aria-expanded="false"
               aria-controls="collapseLayouts"
               ><div class="sb-nav-link-icon">
-                <i class="fa fa-search"></i>
-              </div>
-              Consultar              
-              </router-link>            
-           <router-link to="/lancamentos/cadastrar"
-              class="nav-link collapsed"
-              href="#"
-              data-toggle="collapse"
-              data-target="#collapsePages"
-              aria-expanded="false"
-              aria-controls="collapsePages"
-              ><div class="sb-nav-link-icon">
                 <i class="fa fa-money"></i>
               </div>
-              Cadastrar
+              Gerenciar Lançamentos              
               </router-link>
           </div>
         </div>
