@@ -118,8 +118,7 @@ export default {
   },
    mounted() {
      const usuario = JSON.parse(localStorage.getItem("usuario"));
-     console.log(usuario);
-     this.$store.dispatch("buscarLancamentos", usuario.id);      
+     this.$store.dispatch("buscarLancamentos", usuario.id).catch( (error) => this.$toastr.e(error));
     },
     data() {
         const usuario = JSON.parse(localStorage.getItem("usuario"));

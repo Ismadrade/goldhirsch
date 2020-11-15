@@ -10,6 +10,7 @@ import "primevue/resources/themes/saga-blue/theme.css"
 import firebase from "firebase/app";
 import store from './store/store'
 import VueToastr from "vue-toastr";
+import VueJwtDecode from 'vue-jwt-decode'
 
 const config = {
   apiKey: "AIzaSyDQlcX71M5VJ772OvkUf4e0J-UGDty80lo",
@@ -32,9 +33,9 @@ Vue.use(VueToastr, {
   defaultClassNames: ["animated", "zoomInUp"]
 });
 
-
 new Vue({
   router,
   store,
+  VueJwtDecode,
   render: h => h(App),
 }).$mount('#app')
