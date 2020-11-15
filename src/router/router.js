@@ -3,10 +3,9 @@ import Router from 'vue-router'
 import Login from '../components/login/Login.vue'
 import Register from '../components/login/Register.vue'
 import Layout from '../components/layout/Layout.vue'
-import Consulta from '../components/layout/lancamento/Consulta.vue'
+import Lancamentos from '../components/layout/lancamento/Lancamentos.vue'
 import firebase from "firebase/app";
 import "firebase/auth";
-/* import store from '../store/store' */
 
 Vue.use(Router);
 
@@ -28,7 +27,7 @@ const router = new Router({
       name: 'index',
       component: Layout,
       children: [
-        { path: '/lancamentos/consulta', component: Consulta }
+        { path: '/lancamentos', component: Lancamentos }
       ],
        beforeEnter:((to, from, next) =>{
         firebase.auth().onAuthStateChanged(user => {

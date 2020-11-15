@@ -5,6 +5,9 @@ export default {
     lancamentos: []
   },
   mutations: {
+    SAVE_LANCAMENTOS(state, lancamento) {
+      state.lancamentos.push(lancamento);
+    },
     SET_LANCAMENTOS(state, lancamento) {
       state.lancamentos = lancamento
     },
@@ -13,37 +16,22 @@ export default {
       state.lancamentos.splice(index, 1);
     },
     EDIT_LANCAMENTO(state, payload){
-      var index = state.lancamentos.findIndex(l => l.id === payload.id);
-      if(index !== -1) {
-        state.lancamentos.splice(index, 1, payload);
-    }    
-
+      var index = state.lancamentos.findIndex(l => l.id === payload.id);  
+      state.lancamentos.splice(index, 1, payload);        
     }
-
   },
   actions: {
-    inserirLancamento(context, payload){
-      return new Promise((resolve, reject) => {
-        Lancamento.criarLancamento(payload)
-          .then( resp => {                        
-            resolve(resp) 
-          })
-          .catch(err => {
-          console.log(err);
-          reject(err)
-        })
-      })
+    async inserirLancamento({commit} , payload){
+      let response = await Lancamento.criarLancamento(payload);
+      commit('SAVE_LANCAMENTOS', response.data);
     },
     async buscarLancamentos({commit}, payload){
-        let response = await Lancamento.buscarLancamento(payload);
-        console.log(response.data);
-        commit('SET_LANCAMENTOS', response.data);
+      let response = await Lancamento.buscarLancamento(payload);
+      commit('SET_LANCAMENTOS', response.data);
     },  
-    excluirLancamento( {commit}, lancamento){
-      
-        Lancamento.excluirLancamento(lancamento.id)
-        commit('DELETE_LANCAMENTO', lancamento);
-
+    excluirLancamento( {commit}, lancamento){      
+      Lancamento.excluirLancamento(lancamento.id);
+      commit('DELETE_LANCAMENTO', lancamento);
     },
     async editarLancamento({commit}, lancamento){
       let response = await Lancamento.editarLancamento(lancamento.id, lancamento);

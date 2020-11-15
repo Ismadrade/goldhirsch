@@ -28,7 +28,7 @@
         </template>
       </Column>
     </DataTable>
-
+    <!-- Modal Excluir -->    
     <Dialog  header="Confirm" :modal="true" :visible.sync="deletarLancamento" :closable="true" :style="{width: '450px'}" >
       <div class="confirmation-content">
         <i class="pi pi-exclamation-triangle mr-2" style="font-size: 2rem" />
@@ -94,8 +94,6 @@
         <Button label="Salvar" icon="pi pi-check" class="p-button-success"  @click="editLancamento()" />
     </template>
     </Dialog>
-
-
   </div>
 </template>
 
@@ -107,8 +105,6 @@ import Button from 'primevue/button';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
-
-
 
 export default {
   components:{
@@ -220,9 +216,7 @@ export default {
           this.lancamento = {}
           const usuario = JSON.parse(localStorage.getItem("usuario"));
           this.$store.dispatch("buscarLancamentos", usuario.id);
-        }
-      
-
+        }      
     }
 }
 </script>

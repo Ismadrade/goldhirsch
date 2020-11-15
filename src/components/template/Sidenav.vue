@@ -11,7 +11,7 @@
               Dashboard</a
             >
             <div class="sb-sidenav-menu-heading">Lançamento</div>
-            <router-link to="/lancamentos/consulta"            
+            <router-link to="/lancamentos"            
               class="nav-link collapsed"
               href="#"
               data-toggle="collapse"
