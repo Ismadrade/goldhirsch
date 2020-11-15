@@ -123,7 +123,7 @@ export default {
    mounted() {
      const usuario = JSON.parse(localStorage.getItem("usuario"));
      console.log(usuario);
-     this.$store.dispatch("buscarLancamentos", 52);      
+     this.$store.dispatch("buscarLancamentos", usuario.id);      
     },
     data() {
         const usuario = JSON.parse(localStorage.getItem("usuario"));
