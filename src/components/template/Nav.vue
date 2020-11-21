@@ -1,13 +1,12 @@
 <template>
-        <nav class="sb-topnav navbar navbar-inverse navbar-dark sb-new-blue">           
-            <div class="navbar-header">
-                <router-link to="/"><a class="navbar-brand" href="#">Meus Clientes</a></router-link>
-                <button class="btn btn-link btn-sm order-1 order-lg-0 mt-0" id="sidebarToggle" href="#">
-                    <i class="fa fa-bars"></i>
-                </button>             
-            </div>
+        <nav class="sb-topnav navbar navbar-inverse navbar-dark sb-new-blue d-flex justify-content-between"> 
+            <ul>
+            </ul>          
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="text-white mr-5" href="#" v-on:click="logout">Logout</a></li>            
+                <router-link to="/"><v-img src="@/assets/logo.png" width="160px" height="65px" position="center"/></router-link>          
+            </ul>
+            <ul class="nav navbar-nav ">
+                <li><a class=" mr-5" href="" v-on:click="logout" style="color: #777777 !important;"><i class="fa fa-power-off"></i></a></li>            
             </ul>        
         </nav>       
 </template>

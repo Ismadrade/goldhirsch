@@ -11,6 +11,8 @@ import firebase from "firebase/app";
 import store from './store/store'
 import VueToastr from "vue-toastr";
 import VueJwtDecode from 'vue-jwt-decode'
+import vuetify from '@/plugins/vuetify'
+
 
 const config = {
   apiKey: "AIzaSyDQlcX71M5VJ772OvkUf4e0J-UGDty80lo",
@@ -33,9 +35,13 @@ Vue.use(VueToastr, {
   defaultClassNames: ["animated", "zoomInUp"]
 });
 
+
+
+
 new Vue({
   router,
   store,
   VueJwtDecode,
+  vuetify,
   render: h => h(App),
 }).$mount('#app')

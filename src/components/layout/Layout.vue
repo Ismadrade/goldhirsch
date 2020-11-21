@@ -5,7 +5,7 @@
       <Sidenav></Sidenav>
       <div id="layoutSidenav_content">
         <main>
-          <div class="container-fluid">
+          <div class="container">
             <router-view></router-view>
           </div>
         </main>
