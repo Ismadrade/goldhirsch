@@ -6,7 +6,7 @@
                 <router-link to="/"><v-img src="@/assets/logo.png" width="160px" height="65px" position="center"/></router-link>          
             </ul>
             <ul class="nav navbar-nav ">
-                <li><a class=" mr-5" href="" v-on:click="logout" style="color: #777777 !important;"><i class="fa fa-power-off"></i></a></li>            
+                <li><a class=" mr-5" href="#" v-on:click="logout" style="color: #777777 !important;"><i class="fa fa-power-off"></i></a></li>            
             </ul>        
         </nav>       
 </template>
