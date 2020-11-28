@@ -16,7 +16,7 @@
       </template>
       <v-card>
             <v-card-title>
-              <span class="headline">{{ titulo }}</span>
+              <span class="headline">{{ lancamento.id == null ? titulo = "Salvar Lançamento" : titulo = "Editar Lançamento" }}</span>
             </v-card-title>
 
             <v-card-text>
@@ -30,6 +30,7 @@
                     <v-text-field
                       v-model="lancamento.id"
                       label="ID"
+                      disabled
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -378,9 +379,8 @@ export default {
     },
     modalEditLancamento(data) {
       console.log(data);
-      this.lancamento = data;
-      this.titulo = "Editar Lançamento";
-      return (this.editarLancamento = true);
+      this.lancamento = data;      
+      return (this.dialog = true);
     },
     editLancamento() {
       console.log(this.lancamento);
