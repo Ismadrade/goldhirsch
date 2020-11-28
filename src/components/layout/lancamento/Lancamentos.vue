@@ -5,15 +5,116 @@
       <li class="breadcrumb-item active">Consulta</li>
     </ol>
     <br />
-    <Button
-      label="Salvar"
-      icon="pi pi-save"
-      class="p-button-success"
-      @click="salvar()"
-    />
+    <v-dialog
+          v-model="dialog"
+          max-width="500px"
+        >
+      <template v-slot:[`activator`]="{ on, attrs }">
+        <v-btn color="success" dark class="mb-2" v-bind="attrs" v-on="on">
+          Inserir Lançamento
+        </v-btn>
+      </template>
+      <v-card>
+            <v-card-title>
+              <span class="headline">{{ titulo }}</span>
+            </v-card-title>
 
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="lancamento.id"
+                      label="ID"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="lancamento.descricao"
+                      label="Descrição"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-select
+                      v-model="lancamento.mes"
+                      :items="calendario"
+                      item-text="mes"
+                      item-value="code"
+                      label="Mês"
+                      data-vv-name="select"                      
+                    ></v-select>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="lancamento.ano"
+                      label="Ano"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="lancamento.valor"
+                      label="Valor"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                  <v-select
+                      v-model="lancamento.tipo"
+                      :items="tipo"
+                      item-text="descricao"
+                      item-value="code"
+                      label="Descrição"
+                      data-vv-name="select"                      
+                    ></v-select>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="dialog = false"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="editLancamento"
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+      </v-dialog>
     <!-- Data Table-->
-    <v-card>
+    <v-card>      
       <template>
         <v-text-field
           v-model="search"
@@ -21,7 +122,7 @@
           label="Search"
           single-line
           hide-details
-          style="width: 200px; margin: 0 0 0.5vh 2vh;"
+          style="width: 200px; margin: 0 0 0.5vh 2vh"
         ></v-text-field>
       </template>
       <v-data-table :headers="headers" :items="lancamentos" :search="search">
@@ -30,7 +131,7 @@
             mdi-pencil
           </v-icon>
           <v-icon small @click="confirmexcluir(item)"> mdi-delete </v-icon>
-        </template>        
+        </template>
       </v-data-table>
     </v-card>
 
@@ -198,6 +299,7 @@ export default {
   data() {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     return {
+      dialog: false,
       search: "",
       headers: [
         {
@@ -210,9 +312,8 @@ export default {
         { text: "Ano", value: "ano" },
         { text: "Tipo", value: "tipo" },
         { text: "Valor", value: "valor" },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: "Actions", value: "actions", sortable: false },
       ],
-
       deletarLancamento: false,
       editarLancamento: false,
       titulo: "",
@@ -297,7 +398,7 @@ export default {
             this.$toastr.s("Lançamento cadastrado com sucesso!");
             this.lancamento = {};
             this.editarLancamento = false;
-            
+
             this.$store.dispatch("buscarLancamentos", usuario.id);
           })
           .catch((err) => {
