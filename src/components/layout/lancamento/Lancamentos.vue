@@ -114,6 +114,17 @@
             </v-card-actions>
           </v-card>
       </v-dialog>
+      <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-text class="pt-10 text-center"> <i class="fa fa-exclamation-triangle mr-2" style="font-size: 2rem" />Você deseja realmente deletar este Lançamento?</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialogDelete = false">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="excluirLancamento">OK</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
     <!-- Data Table-->
     <v-card>      
       <template>
@@ -145,7 +156,7 @@
       :style="{ width: '450px' }"
     >
       <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle mr-2" style="font-size: 2rem" />
+        <i class="fas fa-exclamation-triangle mr-2" style="font-size: 2rem" />
         <span>Você realmente quer excluir este lançamento? </span>
       </div>
       <template #footer>
@@ -301,6 +312,7 @@ export default {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     return {
       dialog: false,
+      dialogDelete: false,
       search: "",
       headers: [
         {
@@ -363,7 +375,7 @@ export default {
     },
     confirmexcluir(data) {
       this.lancamento = data;
-      return (this.deletarLancamento = true);
+      return (this.dialogDelete = true);
     },
     excluirLancamento() {
       this.$store.dispatch("excluirLancamento", this.lancamento);
