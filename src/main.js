@@ -12,6 +12,7 @@ import store from './store/store'
 import VueToastr from "vue-toastr";
 import VueJwtDecode from 'vue-jwt-decode'
 import vuetify from '@/plugins/vuetify'
+import VuetifyMoney from "vuetify-money";
 
 
 const config = {
@@ -34,6 +35,7 @@ Vue.use(VueToastr, {
   clickClose: true,
   defaultClassNames: ["animated", "zoomInUp"]
 });
+Vue.use(VuetifyMoney);
 
 
 
