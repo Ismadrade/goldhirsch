@@ -35,11 +35,16 @@ export default {
         .then(() => {
           Usuario.logar(credentials)
             .then(resp => {
-              const usuario = JSON.stringify(resp.data.usuario)
+              const usuario = {
+                "id": resp.data.id,
+                "nome": resp.data.nome,
+                "sobrenome": resp.data.sobrenome,
+                "email": resp.data.email
+              }
               const token = JSON.stringify(resp.data.token)
-              localStorage.setItem('usuario', usuario)
+              localStorage.setItem('usuario', JSON.stringify(usuario))
               localStorage.setItem('token', token)                 
-              context.commit("usuario", usuario )
+              context.commit("usuario", JSON.stringify(usuario) )
               context.commit("token", token) 
               resolve(resp)     
             }, error =>{

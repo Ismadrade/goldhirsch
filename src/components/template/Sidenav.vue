@@ -60,6 +60,7 @@ export default {
        loggedIn(){
            let user = JSON.parse(this.$store.getters.loggedIn);
            console.log("user: ", user.nome)
+           console.log("user: ", user.sobrenome)
            return user.nome + " " + user.sobrenome
        },
        getEmail(){
