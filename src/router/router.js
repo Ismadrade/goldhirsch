@@ -4,6 +4,7 @@ import Login from '../components/login/Login.vue'
 import Register from '../components/login/Register.vue'
 import Layout from '../components/layout/Layout.vue'
 import Lancamentos from '../components/layout/lancamento/Lancamentos.vue'
+import Dashboard from '../components/layout/dashboard/Dashboard.vue'
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -27,7 +28,8 @@ const router = new Router({
       name: 'index',
       component: Layout,
       children: [
-        { path: '/lancamentos', component: Lancamentos }
+        { path: '/lancamentos', component: Lancamentos },
+        { path: '/', component: Dashboard }
       ],
        beforeEnter:((to, from, next) =>{
         firebase.auth().onAuthStateChanged(user => {
