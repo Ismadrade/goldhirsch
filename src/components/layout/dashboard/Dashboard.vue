@@ -1,49 +1,82 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" sm="6" md="3">
+      <v-col cols="12" sm="12" md="6" lg="4">
         <v-card max-width="375">
           <v-card-text class="d-flex justify-space-between">
-            <v-icon size="80">mdi-currency-usd-circle-outline</v-icon> 
+            <v-icon size="80">mdi-cash-register</v-icon> 
             <div>
-              <v-content style="text-align: right; font-size: 18px">Valor Total</v-content><br>
+              <v-content style="text-align: right; font-size: 18px">Em sua conta</v-content><br>
               <v-content style="font-size: 30px;">R$ 200,00</v-content>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="6" md="3">
+      <v-col cols="12" sm="12" md="6" lg="4">
         <v-card max-width="375">
           <v-card-text class="d-flex justify-space-between">
-            <v-icon size="80">mdi-cash-plus</v-icon> 
+            <v-icon size="80">mdi-cash-minus</v-icon> 
             <div>
-              <v-content style="text-align: right; font-size: 18px">Valor Mensal</v-content><br>
+              <v-content style="text-align: right; font-size: 18px">Em {{new Date().toLocaleString('pt-br', { month: 'long' })}} você gastou</v-content><br>
               <v-content style="font-size: 30px;">R$ 102,00</v-content>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="6" md="3">
+      <v-col cols="12" sm="12" md="6" lg="4">
         <v-card max-width="375">
           <v-card-text class="d-flex justify-space-between">
-            <v-icon size="80">mdi-currency-usd-off</v-icon> 
+            <v-icon size="80">mdi-cash-plus</v-icon> 
             <div>
-              <v-content style="text-align: right; font-size: 18px">Gasto Total</v-content><br>
+              <v-content style="text-align: right; font-size: 18px">Em {{new Date().toLocaleString('pt-br', { month: 'long' })}} você adquiriu</v-content><br>
               <v-content style="font-size: 30px;">R$ 100,00</v-content>
             </div>
+          </v-card-text>
+        </v-card>
+      </v-col>      
+    </v-row>
+    <v-row>
+      <v-col sm="11" lg="8">
+        <v-card
+          class="mt-16 mx-auto"
+          max-width="1200"
+        >
+          <v-sheet
+            class="v-sheet--offset mx-auto pb-5"
+            color="white"
+            elevation="12"
+            max-width="calc(100% - 32px)"
+            max-height="400"
+          >
+          <v-sparkline
+            :labels="labels"
+            :value="value"
+            
+            color="rgba(0,0,0,.6)"
+            line-width="2"
+            padding="16"
+          ></v-sparkline>
+          </v-sheet>
+
+          <v-card-text class="pt-0">
+            <div class="title font-weight-light mb-2">
+              Média Semestral
+            </div>
+            <div class="subheading font-weight-light grey--text">
+              Seus gastos nos ultimos {{labels.length}} meses
+            </div>
+            <v-divider class="my-2"></v-divider>
+            <v-icon
+              class="mr-2"
+              small
+            >
+              mdi-clock
+            </v-icon>
+            <span class="caption grey--text font-weight-light">Atualizado a 36 min atrás</span>
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="6" md="3">
-        <v-card max-width="375">
-          <v-card-text class="d-flex justify-space-between">
-            <v-icon size="80">mdi-cash-minus</v-icon> 
-            <div>
-              <v-content style="text-align: right; font-size: 18px">Gasto Mensal</v-content><br>
-              <v-content style="font-size: 30px;">R$ 100,00</v-content>
-            </div>
-          </v-card-text>
-        </v-card>
+      <v-col offset="1" offset-lg="4">
       </v-col>
     </v-row>
   </v-container>
@@ -51,10 +84,31 @@
 
 <script>
 export default {
+   data: () => ({
+      labels: [
+        'Jul',
+        'Ago',
+        'Set',
+        'Out',
+        'Nov',
+        'Dez'
+      ],
+      value: [
+        250,
+        240,
+        300,
+        500,
+        650,
+        700
+      ],
+    }),
 
 }
 </script>
 
 <style>
-
+  .v-sheet--offset {
+    top: -24px;
+    position: relative;
+  }
 </style>
