@@ -15,6 +15,9 @@ import vuetify from '@/plugins/vuetify'
 import VuetifyMoney from "vuetify-money";
 
 
+
+
+
 const config = {
   apiKey: "AIzaSyDQlcX71M5VJ772OvkUf4e0J-UGDty80lo",
   authDomain: "authenticationgoldhirsch.firebaseapp.com",

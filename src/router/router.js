@@ -8,6 +8,10 @@ import Dashboard from '../components/layout/dashboard/Dashboard.vue'
 import firebase from "firebase/app";
 import "firebase/auth";
 
+import store from '../store/store'
+import { isEmpty } from 'lodash';
+import {decryptData} from "../utils";
+
 Vue.use(Router);
 
 const openRoutes=['login', 'register']; 
@@ -32,6 +36,39 @@ const router = new Router({
         { path: '/', component: Dashboard }
       ],
        beforeEnter:((to, from, next) =>{
+        const { isLoggedIn } = store.getters;
+        
+        const redirect = () => {
+          next("/login");
+        };
+
+        const doLogin = (token) => {
+          store.dispatch("doLogin", token);
+          next();
+        };
+        
+        if (to.path !== '/login') {
+          if (isLoggedIn) {
+            next();
+          }else if (!isEmpty(localStorage.getItem('1')) && localStorage.getItem('1') === "true") {
+            if (!isEmpty(localStorage.getItem('2'))) {
+              const token = decryptData(localStorage.getItem('2'), process.env.VUE_APP_ROOT_SECRET_ENCRYPTION_SEQUENCE);
+              doLogin(token);
+            } else {
+              redirect();
+            }
+          }
+          else {
+            redirect();
+          }
+        } else {
+          isLoggedIn ? next({
+            path: "/",
+          }) : next();
+        }
+      
+      
+      
         firebase.auth().onAuthStateChanged(user => {
           if(openRoutes.includes(to.name)){
             next();
