@@ -157,13 +157,13 @@
 <script>
 export default {
   mounted() {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const usuario = this.$store.getters.loggedIn;
     this.$store
-      .dispatch("buscarLancamentos", usuario.id)
+      .dispatch("buscarLancamentos", usuario.idUsuario)
       .catch((error) => this.$toastr.e(error));
   },
   data() {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const usuario = this.$store.getters.loggedIn;
     return {
       dialog: false,
       dialogDelete: false,
@@ -188,7 +188,7 @@ export default {
         descricao: "",
         mes: "",
         ano: "",
-        usuario: usuario.id,
+        usuario: usuario.idUsuario,
         valor: 0,
         tipo: "",
       },
@@ -257,8 +257,8 @@ export default {
         this.lancamento = {};
         this.$toastr.s("Lançamento editado com sucesso!");
       } else {
-        const usuario = JSON.parse(localStorage.getItem("usuario"));
-        this.lancamento.usuario = usuario.id;
+        const usuario = this.$store.getters.loggedIn;
+        this.lancamento.usuario = usuario.idUsuario;
         this.$store
           .dispatch("inserirLancamento", this.lancamento)
           .then(() => {
@@ -266,7 +266,7 @@ export default {
             this.lancamento = {};
             this.dialog = false;
 
-            this.$store.dispatch("buscarLancamentos", usuario.id);
+            this.$store.dispatch("buscarLancamentos", usuario.idUsuario);
           })
           .catch((err) => {
             this.$toastr.e(err, "Ocorreu um erro:");
@@ -277,8 +277,8 @@ export default {
     reset() {
       this.editarLancamento = false;
       this.lancamento = {};
-      const usuario = JSON.parse(localStorage.getItem("usuario"));
-      this.$store.dispatch("buscarLancamentos", usuario.id);
+      const usuario = this.$store.getters.loggedIn;
+      this.$store.dispatch("buscarLancamentos", usuario.idUsurio);
     },
   },
 };

@@ -76,7 +76,6 @@
 
 <script>
 import "./login.css";
-import "firebase/auth";
 import { mapActions } from 'vuex';
 export default {
   name: 'login',
@@ -89,14 +88,13 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['logarUsuario', "doLogin"]),
+    ...mapActions(['logarUsuario']),
    logar() {
-     this.$store.dispatch("logar", {
+     this.logarUsuario({
        email: this.usuario.email,
        senha: this.usuario.senha
      })
-     .then( (resp) => {
-       this.doLogin(resp.data.token);
+     .then( () => {      
        this.$toastr.s("Usuario logado com sucesso!");
        this.$router.push('/')
      })

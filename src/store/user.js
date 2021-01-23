@@ -1,5 +1,3 @@
-import * as firebase from "firebase/app";
-import "firebase/auth";
 import Usuario from '../services/usuarios'
 import { api } from '../services/config'
 import {encryptData} from "../utils";
@@ -14,7 +12,7 @@ export const getUserFromToken = (token) => {
     const base64Url = token.split('.')[1];
     const decoded = Buffer.from(base64Url, 'base64').toString();
 
-    user = pick(JSON.parse(decoded), ["sub","nome", "sobrenome"]);
+    user = pick(JSON.parse(decoded), ["sub","nome", "sobrenome", "idUsuario"]);
   }
 
   console.log(user);
@@ -33,7 +31,7 @@ export default {
   },
   getters: {
     loggedIn(state){
-      return state.usuario;
+      return state.user;
     },
     getToken(state) {
       return state.token;
@@ -61,47 +59,30 @@ export default {
     }
   },
   actions: {
-    logar (context, credentials) {
-      return new Promise((resolve, reject) => {
-      firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.senha)
-        .then(() => {
-          Usuario.logar(credentials)
-            .then(resp => {
-              const usuario = {
-                "id": resp.data.id,
-                "nome": resp.data.nome,
-                "sobrenome": resp.data.sobrenome,
-                "email": resp.data.email
-              }
-              const token = JSON.stringify(resp.data.token)
-              localStorage.setItem('usuario', JSON.stringify(usuario))
-              localStorage.setItem('token', token)                 
-              context.commit("usuario", JSON.stringify(usuario) )
-              context.commit("token", token) 
-              resolve(resp)     
-            }, error =>{
-              console.log(error)
-            })            
-        }, error =>{
-            console.log(error.message);
-          })
-        .catch(err => {
-          console.log(err);
-          reject(err)
-        })
-      })
-    },
-
-    doLogin(context, token) {
-      console.log("token", token);
+    async logarUsuario (context, credentials) {
+      let usuario = await Usuario.logar(credentials);
+    
+      console.log("token", usuario.data.token);
       console.log("env ",  process.env.VUE_APP_ROOT_SECRET_ENCRYPTION_SEQUENCE)
 
       localStorage.setItem('1', "true");
-      localStorage.setItem('2', encryptData(token, process.env.VUE_APP_ROOT_SECRET_ENCRYPTION_SEQUENCE));
+      localStorage.setItem('2', encryptData(usuario.data.token, process.env.VUE_APP_ROOT_SECRET_ENCRYPTION_SEQUENCE));
 
+      context.commit("setUser", getUserFromToken(usuario.data.token));
+      context.commit("setLogged", true);
+    },
+    async doLogin (context, token){
       context.commit("setUser", getUserFromToken(token));
       context.commit("setLogged", true);
     },
+    doLogout(context) {
+      console.log("Logging out...");
+      localStorage.removeItem('1');
+      localStorage.removeItem('2');
+      context.commit("setUser", null);
+      context.commit("setLogged", false);
+    }
+
 
   }
 }

@@ -1,5 +1,6 @@
 import { api } from './config'
 
+
 export default {
   criarLancamento: (lancamento) => {
     return api.post('lancamentos/inserir-lancamento',lancamento);
@@ -14,3 +15,4 @@ export default {
     return api.put(`lancamentos/${id}`, lancamento);
   }
 }
+

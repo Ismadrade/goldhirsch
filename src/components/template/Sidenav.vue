@@ -58,15 +58,15 @@
 export default {
      computed:{
        loggedIn(){
-           let user = JSON.parse(this.$store.getters.loggedIn);
+           let user = this.$store.getters.loggedIn;
            console.log("user: ", user.nome)
            console.log("user: ", user.sobrenome)
            return user.nome + " " + user.sobrenome
        },
        getEmail(){
-          let user = JSON.parse(this.$store.getters.loggedIn);
-          console.log("user: ", user.email)
-          return user.email
+          let user = this.$store.getters.loggedIn;
+          console.log("user: ", user.sub)
+          return user.sub
        }
    },
     data(){          

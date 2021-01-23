@@ -12,19 +12,15 @@
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth"; 
+import { mapActions } from 'vuex';
+
 export default {
    
     methods: {
+        ...mapActions(["doLogout"]),
         logout(){
-            firebase.auth().signOut()
-            .then( () => {
-                this.$toastr.s("Usuario deslogado com sucesso!");
-
-            }, error =>{
-                this.$toastr.e(error.message, "Ocorreu um erro:");
-            })
+            this.doLogout();
+            this.$router.push("/login");
         }
     }
 };

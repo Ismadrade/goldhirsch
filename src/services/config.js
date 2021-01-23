@@ -4,9 +4,21 @@ import VueJwtDecode from 'vue-jwt-decode'
 import * as firebase from "firebase/app";
 import "firebase/auth"; 
 
+import { isEmpty } from 'lodash';
+import {decryptData} from "../utils";
+
 
 export const api = axios.create({
   baseURL: 'http://localhost:8080/'
+})
+
+api.interceptors.request.use( (request) => {  
+  if (!isEmpty(localStorage.getItem('2'))) {
+    const token = decryptData(localStorage.getItem('2'), process.env.VUE_APP_ROOT_SECRET_ENCRYPTION_SEQUENCE);
+    console.log(token)
+    request.headers.Authorization = `Bearer ${token}`
+  }
+  return request;
 })
 
 api.interceptors.response.use( (response) => {
