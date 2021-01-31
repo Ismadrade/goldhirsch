@@ -50,11 +50,12 @@
                     md="6"
                   >
                     <v-select
-                      v-model="lancamento.mes"
+                      v-model="lancamento.calendario"                      
                       :items="calendario"
                       item-text="mes"
-                      item-value="code"
+                      item-value="codigo"
                       label="Mês"
+                      return-object
                       data-vv-name="select"                      
                     ></v-select>
                   </v-col>
@@ -141,6 +142,13 @@
         ></v-text-field>
       </template>
       <v-data-table :headers="headers" :items="lancamentos" :search="search">
+        <template v-slot:[`item.mes`]="{ item }">
+          {{ item.calendario.mes}}
+        </template>
+        <template v-slot:[`item.dataCadastro`]="{ item }">
+          {{ new Date(item.dataCadastro).toLocaleDateString()}}
+        </template>
+
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon small class="mr-2" @click="modalEditLancamento(item)">
             mdi-pencil
@@ -186,7 +194,10 @@ export default {
       titulo: "",
       lancamento: {
         descricao: "",
-        mes: "",
+        calendario: {
+          codigo: "",
+          mes: ""
+        },
         ano: "",
         usuario: usuario.idUsuario,
         valor: 0,
@@ -208,18 +219,18 @@ export default {
     },
     calendario() {
       return [
-        { mes: "Janeiro", code: 1 },
-        { mes: "Fevereiro", code: 2 },
-        { mes: "Março", code: 3 },
-        { mes: "Abril", code: 4 },
-        { mes: "Maio", code: 5 },
-        { mes: "Junho", code: 6 },
-        { mes: "Julho", code: 7 },
-        { mes: "Agosto", code: 8 },
-        { mes: "Setembro", code: 9 },
-        { mes: "Outubro", code: 10 },
-        { mes: "Novembro", code: 11 },
-        { mes: "Dezembro", code: 12 },
+        { mes: "Janeiro", codigo: 0 },
+        { mes: "Fevereiro", codigo: 1 },
+        { mes: "Março", codigo: 2 },
+        { mes: "Abril", codigo: 3},
+        { mes: "Maio", codigo: 4},
+        { mes: "Junho", codigo: 5 },
+        { mes: "Julho", codigo: 6 },
+        { mes: "Agosto", codigo: 7 },
+        { mes: "Setembro", codigo: 8 },
+        { mes: "Outubro", codigo: 9 },
+        { mes: "Novembro", codigo: 10 },
+        { mes: "Dezembro", codigo: 11 },
       ];
     },
     tipo() {
@@ -277,8 +288,8 @@ export default {
     reset() {
       this.editarLancamento = false;
       this.lancamento = {};
-      const usuario = this.$store.getters.loggedIn;
-      this.$store.dispatch("buscarLancamentos", usuario.idUsurio);
+      const usuario = this.$store.getters.loggedIn;      
+      this.$store.dispatch("buscarLancamentos", usuario.idUsuario);
     },
   },
 };

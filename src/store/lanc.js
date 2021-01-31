@@ -27,6 +27,7 @@ export default {
     },
     async buscarLancamentos({commit}, payload){
       let response = await Lancamento.buscarLancamento(payload);
+      console.log(response.data)
       commit('SET_LANCAMENTOS', response.data);
     },  
     excluirLancamento( {commit}, lancamento){      
