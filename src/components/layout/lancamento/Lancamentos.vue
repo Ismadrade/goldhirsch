@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <h1 class="mt-4">Lançamento</h1>
-    <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item active">Consulta</li>
-    </ol>
+  <v-container>        
+    <span class="h1 titulo">Lançamentos</span>    
     <br />
     <v-dialog
           v-model="dialog"
@@ -11,7 +8,7 @@
           persistent
         >
       <template v-slot:[`activator`]="{ on, attrs }">
-        <v-btn color="success" dark class="mb-2" v-bind="attrs" v-on="on">
+        <v-btn color="#495050" dark class="my-5" v-bind="attrs" v-on="on">
           Inserir Lançamento
         </v-btn>
       </template>
@@ -148,6 +145,9 @@
         <template v-slot:[`item.dataCadastro`]="{ item }">
           {{ new Date(item.dataCadastro).toLocaleDateString()}}
         </template>
+        <template v-slot:[`item.valor`]="{ item }">
+          R$ {{ item.valor.toString().replace('.', ',')}}
+        </template>
 
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon small class="mr-2" @click="modalEditLancamento(item)">
@@ -159,7 +159,7 @@
     </v-card>
 
    
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -183,7 +183,7 @@ export default {
           value: "descricao",
         },
         { text: "Data do Cadastro", value: "dataCadastro" },
-        { text: "Mês", value: "mes" },
+        { text: "Mês", value: "calendario.mes" },
         { text: "Ano", value: "ano" },
         { text: "Tipo", value: "tipo" },
         { text: "Valor", value: "valor" },
@@ -295,4 +295,9 @@ export default {
 };
 </script>
 <style>
+.titulo{
+  border-top: 3px solid #495050;
+  border-bottom: 3px solid #495050;
+  color: #495050;
+}
 </style>

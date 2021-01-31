@@ -35,8 +35,8 @@ export default {
       commit('DELETE_LANCAMENTO', lancamento);
     },
     async editarLancamento({commit}, lancamento){
-      let response = await Lancamento.editarLancamento(lancamento.id, lancamento);
-      commit('EDIT_LANCAMENTO', response.data);
+      await Lancamento.editarLancamento(lancamento.id, lancamento);
+      commit('EDIT_LANCAMENTO', lancamento);
     }
   },  
 }
