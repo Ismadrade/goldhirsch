@@ -18,8 +18,7 @@ api.interceptors.request.use( (request) => {
   return request;
 })
 
-api.interceptors.response.use( (response) => {
-  console.log("response aqui ", response)
+api.interceptors.response.use( (response) => {  
   return response;
 }, error => {
 const token = decryptData(localStorage.getItem('2'), process.env.VUE_APP_ROOT_SECRET_ENCRYPTION_SEQUENCE);

@@ -4,10 +4,10 @@
       <v-col cols="12" sm="12" md="6" lg="4">
         <v-card max-width="375">
           <v-card-text class="d-flex justify-space-between">
-            <v-icon size="80">mdi-cash-register</v-icon> 
+            <v-icon size="80">mdi-piggy-bank-outline</v-icon> 
             <div>
               <v-content style="text-align: right; font-size: 18px">Em sua conta</v-content><br>
-              <v-content style="font-size: 30px;">R$ 200,00</v-content>
+              <v-content style="font-size: 30px;">R$ {{valorConta}}</v-content>
             </div>
           </v-card-text>
         </v-card>
@@ -18,7 +18,7 @@
             <v-icon size="80">mdi-cash-minus</v-icon> 
             <div>
               <v-content style="text-align: right; font-size: 18px">Em {{new Date().toLocaleString('pt-br', { month: 'long' })}} você gastou</v-content><br>
-              <v-content style="font-size: 30px;">R$ 102,00</v-content>
+              <v-content style="font-size: 30px;">R$ {{gastoMensal}}</v-content>
             </div>
           </v-card-text>
         </v-card>
@@ -29,7 +29,7 @@
             <v-icon size="80">mdi-cash-plus</v-icon> 
             <div>
               <v-content style="text-align: right; font-size: 18px">Em {{new Date().toLocaleString('pt-br', { month: 'long' })}} você adquiriu</v-content><br>
-              <v-content style="font-size: 30px;">R$ 100,00</v-content>
+              <v-content style="font-size: 30px;">R$ {{lucroMensal}}</v-content>
             </div>
           </v-card-text>
         </v-card>
@@ -83,25 +83,39 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-   data: () => ({
-      labels: [
-        'Jul',
-        'Ago',
-        'Set',
-        'Out',
-        'Nov',
-        'Dez'
-      ],
-      value: [
-        250,
-        240,
-        300,
-        500,
-        650,
-        700
-      ],
-    }),
+  data: () => ({     
+    labels: [
+      'Jul',
+      'Ago',
+      'Set',
+      'Out',
+      'Nov',
+      'Dez'
+     ],
+    value: [
+      250,
+      240,
+      300,
+      500,
+      650,
+      700
+    ],
+    options: {
+      locale: "pt-BR",
+      prefix: "R$",
+      suffix: "",
+      length: 11,
+      precision: 2
+    }, 
+  }),
+  beforeMount() {
+    this.$store.dispatch("buscarLancamentos");
+  },
+  computed: {
+    ...mapGetters(["lucroMensal", "gastoMensal", "valorConta"])
+  }
 
 }
 </script>
