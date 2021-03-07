@@ -3,10 +3,10 @@
     
       <v-navigation-drawer
         permanent
-        expand-on-hover
+        expand-on-hover 
         dark        
         mini-variant-width="8vh"
-        fixed      
+        fixed
         width="300px"  
       >
         <v-list>       
@@ -30,17 +30,17 @@
           dense
           flat
         >
-          <v-list-item link>
-            <v-list-item-icon>
-              <v-icon>fa fa-money</v-icon>
-            </v-list-item-icon>
-             <v-list-item-title><router-link to="/lancamentos" style="color: #fff; text-decoration: none;">Lançamentos</router-link></v-list-item-title>
-          </v-list-item>
-          <v-list-item link>
+          <v-list-item to="/">
             <v-list-item-icon>
               <v-icon>mdi-account-multiple</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Shared with me</v-list-item-title>
+            <v-list-item-title>Dashboard</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/lancamentos">
+            <v-list-item-icon>
+              <v-icon>fa fa-money</v-icon>
+            </v-list-item-icon>
+             <v-list-item-title>Lançamentos</v-list-item-title>
           </v-list-item>
           <v-list-item link>
             <v-list-item-icon>

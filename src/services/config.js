@@ -1,9 +1,6 @@
 import axios from 'axios'
 import store from '../store/store'
 import VueJwtDecode from 'vue-jwt-decode'
-import * as firebase from "firebase/app";
-import "firebase/auth"; 
-
 import { isEmpty } from 'lodash';
 import {decryptData} from "../utils";
 
@@ -22,16 +19,17 @@ api.interceptors.request.use( (request) => {
 })
 
 api.interceptors.response.use( (response) => {
+  console.log("response aqui ", response)
   return response;
 }, error => {
- const token = JSON.parse(store.getters.getToken);
+const token = decryptData(localStorage.getItem('2'), process.env.VUE_APP_ROOT_SECRET_ENCRYPTION_SEQUENCE);
  const tokenDecoded = VueJwtDecode.decode(token);
  const expiration = new Date(tokenDecoded.exp * 1000);
  if(expiration < new Date()){
-    firebase.auth().signOut()
+    store.dispatch("doLogout")
+    this.$router.push("/login");
     return Promise.reject("Sessão Expirada!")
  }
- console.log('token', expiration)
  return error
 })
 
